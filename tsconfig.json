@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "ESNext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "src": [
+        "src/"
+      ],
+      "client": [
+        "src/client/"
+      ],
+      "server": [
+        "src/server/"
+      ],
+      "common": [
+        "src/common/"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "src/client"
+  ],
+  "exclude": [
+    "node_modules",
+    ".idea",
+    "dist",
+    "public",
+    "scripts"
+  ]
+}
