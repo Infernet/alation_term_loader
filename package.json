@@ -1,6 +1,6 @@
 {
   "name": "alation_term_loader",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "private": false,
   "description": "Загрузчик терминов и физики в Alation",
   "homepage": "https://github.com/Infernet/alation_term_loader",
@@ -13,6 +13,9 @@
   "bugs": {
     "url": "https://github.com/Infernet/alation_term_loader/issues"
   },
+  "bin": {
+    "alation_term_loader": "./bin/index.js"
+  },
   "typings": "lib/types/index.d.ts",
   "author": "Sergey Ogoltsov-Yezersky",
   "scripts": {
@@ -22,8 +25,7 @@
     "build:esm": "babel src --config-file ./babel.esm.config.js --out-dir lib/esm --extensions \".ts,.tsx,.js,.jsx\" --source-maps",
     "watch:esm": "babel src --config-file ./babel.esm.config.js --out-dir lib/esm --extensions \".ts,.tsx,.js,.jsx\" --source-maps -w",
     "eslint:fix": "npx eslint --fix src --ext .js,.ts",
-    "build:types": "tsc -p tsconfig-declarations.json",
-    "publish": "npm run build && npm publish"
+    "build:types": "tsc -p tsconfig-declarations.json"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
@@ -46,7 +48,6 @@
   },
   "dependencies": {
     "alation_connector": "^0.0.16",
-    "chalk": "^4.1.2",
     "fs-extra": "^10.0.0",
     "inquirer": "^8.2.0",
     "node-html-parser": "^5.0.0"

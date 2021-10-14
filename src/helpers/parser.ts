@@ -3,7 +3,7 @@ import {PHYSICS_FIELDS_POSITION, TERM_FIELDS_POSITION} from '../constants';
 
 
 export function parseTerm(content: string): ITerm {
-  const columns = content.split('\t');
+  const columns = content.split('\t').map((e)=>e.trim());
   const result: ITerm = {} as ITerm;
 
   for (const [fieldName, position] of Object.entries(TERM_FIELDS_POSITION)) {
@@ -19,7 +19,7 @@ export function parseTerm(content: string): ITerm {
 }
 
 export function parsePhysics(content: string): IPhysic {
-  const columns = content.split('\t');
+  const columns = content.split('\t').map((e)=>e.trim());
   const result: IPhysic = {} as IPhysic;
 
   for (const [fieldName, position] of Object.entries(PHYSICS_FIELDS_POSITION)) {

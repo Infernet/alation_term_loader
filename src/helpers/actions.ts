@@ -1,4 +1,4 @@
-import {Alation} from 'alation_connector';
+import {Alation, IAttribute, ITable} from 'alation_connector';
 import {CustomFieldsIdCollection, IPhysic, ITerm} from '../types';
 import {ITermArticle, LinkCustomFieldValue} from '../types/alation';
 import {
@@ -128,7 +128,7 @@ export async function uploadPhysic(connector: Alation, customFieldsId: CustomFie
     ds_id: instance.id,
   }, true));
   // получение таблицы
-  const table = checkSearchResult(await connector.Table.search({
+  let table = checkSearchResult(await connector.Table.search({
     name: segments[2].toLowerCase(),
     ds_id: instance.id,
     schema_id: schema.id,
@@ -137,29 +137,32 @@ export async function uploadPhysic(connector: Alation, customFieldsId: CustomFie
   let lineageTableRow;
   if (segments.length === 4) {
     // получение аттрибута
-    const attribute = checkSearchResult(await connector.Attribute.search({
+    let attribute = checkSearchResult(await connector.Attribute.search({
       name: segments[3].toLowerCase(),
       ds_id: instance.id,
       schema_id: schema.id, table_id: table.id,
     }, true));
 
-    lineageTableRow = generateLineageTableRow('attribute', instance, schema, table, attribute);
-
     // обновление title и description
-    const updateResult = await connector.Attribute.update({
-      key: [
-        instance.id,
-        schema.name.toLowerCase(),
-        table.name.toLowerCase(),
-        attribute.name.toLowerCase(),
-      ].join('.'),
-      title: physicData.title.length ? physicData.title : attribute.title,
-      description: physicData.description.length ? physicData.description : attribute.description,
-    });
-    if (updateResult.error) {
-      throw new AlationTermError(PHYSIC_COLUMN_NAMES.physicPath, 'не удалось обновить title и description');
+    if (physicData.title.length || physicData.description.length) {
+      const response = await connector.Attribute.update({
+        key: [
+          instance.id,
+          schema.name.toLowerCase(),
+          table.name.toLowerCase(),
+          attribute.name.toLowerCase(),
+        ].join('.'),
+        ...(physicData.title.length ? {title: physicData.title} : {}),
+        ...(physicData.description.length ? {description: physicData.description} : {}),
+      });
+
+      if (response.error) {
+        throw new AlationTermError(PHYSIC_COLUMN_NAMES.physicPath, 'не удалось обновить title и description');
+      }
+      attribute = await connector.Attribute.getById(attribute.id) as IAttribute;
     }
 
+    lineageTableRow = generateLineageTableRow('attribute', instance, schema, table, attribute);
     // добавление ссылки Lineage ref
     const response = await connector.updateCustomFieldsValue<LinkCustomFieldValue>({
       field_id: customFieldsId.lineageRef,
@@ -181,21 +184,25 @@ export async function uploadPhysic(connector: Alation, customFieldsId: CustomFie
       ].join(','), 'не удалось добавить ссылку в custom field Lineage');
     }
   } else {
-    lineageTableRow = generateLineageTableRow('table', instance, schema, table);
     // обновление title и description
-    const updateResult = await connector.Table.update({
-      key: [
-        instance.id,
-        schema.name.toLowerCase(),
-        table.name.toLowerCase(),
-      ].join('.'),
-      title: physicData.title.length ? physicData.title : table.title,
-      description: physicData.description.length ? physicData.description : table.description,
-    });
-    if (updateResult.error) {
-      throw new AlationTermError(PHYSIC_COLUMN_NAMES.physicPath, 'не удалось обновить title и description');
+    if (physicData.title.length || physicData.description.length) {
+      const response = await connector.Table.update({
+        key: [
+          instance.id,
+          schema.name.toLowerCase(),
+          table.name.toLowerCase(),
+        ].join('.'),
+        ...(physicData.title.length ? {title: physicData.title} : {}),
+        ...(physicData.description.length ? {description: physicData.description} : {}),
+      });
+
+      if (response.error) {
+        throw new AlationTermError(PHYSIC_COLUMN_NAMES.physicPath, 'не удалось обновить title и description');
+      }
+      table = await connector.Table.getById(table.id) as ITable;
     }
 
+    lineageTableRow = generateLineageTableRow('table', instance, schema, table);
     // добавление ссылки Lineage ref
     const response = await connector.updateCustomFieldsValue<LinkCustomFieldValue>({
       field_id: customFieldsId.lineageRef,

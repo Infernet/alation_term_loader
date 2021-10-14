@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import path from 'path';
 import {loadConfig} from './helpers/config';
 import {Alation} from 'alation_connector';
@@ -9,7 +8,8 @@ import inquirer from 'inquirer';
 
 export async function run(): Promise<void> {
   try {
-    console.log(chalk.bgBlack(chalk.white('Загрузчик терминов и физики в Alation')));
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+    console.log('Загрузчик терминов и физики в Alation');
     const {
       inputConfigPath,
       inputFilePath,
@@ -19,18 +19,18 @@ export async function run(): Promise<void> {
       {
         type: 'input',
         name: 'inputConfigPath',
-        message: chalk.bgGray(chalk.green('Укажите путь к конфигурационному файлу')),
+        message: 'Укажите путь к конфигурационному файлу',
         default: path.join(process.cwd(), 'config.json'),
       },
       {
         type: 'list',
         name: 'inputMode',
-        message: chalk.bgGray(chalk.green('Выберите режим работы')),
+        message: 'Выберите режим работы',
         choices: [
           'Загрузка терминов',
           'Загрузка физики',
         ],
-        default: 'Загрузка физики',
+        default: 'Загрузка терминов',
         filter(input: string): ModeType {
           if (input === 'Загрузка терминов') {
             return 'terms';
@@ -41,13 +41,13 @@ export async function run(): Promise<void> {
       {
         type: 'input',
         name: 'inputFilePath',
-        message: chalk.bgGray(chalk.green('Укажите путь к TSV файлу')),
-        default: path.join(process.cwd(), 'uploads/physics.tsv'),
+        message: 'Укажите путь к TSV файлу',
+        default: path.join(process.cwd(), 'file.tsv'),
       },
       {
         type: 'list',
         name: 'inputSkipHeader',
-        message: chalk.bgGray(chalk.green('Первая запись в файле заголовок?')),
+        message: 'Первая запись в файле заголовок?',
         choices: [
           'Да',
           'Нет',
@@ -64,7 +64,6 @@ export async function run(): Promise<void> {
     const config = loadConfig(configPath);
 
 
-    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
     const connector = new Alation({
       username: config.username,
       password: config.password,

@@ -5,6 +5,28 @@
 - Для утилиты не разрабатывается UI, она будет запускаться из командной строки.
 - Загружаться будут файлы в формате TSV - текстовые файлы с разделителем табуляцией, UTF-8
 
+## Установка и запуск
+Для запуска необходимо иметь установленную версию `NODE.JS` не младше v14.17.3 и `NPM` v6.14+
+
+1) Установить пакет глобально `npm i -g alation_term_loader`<br>
+2) Создать JSON файл конфигурации, по формату: `{
+   "host": "http://www.alation.com",
+   "username": "user@alation.com",
+   "password": "password",
+   "logPath": "logs",
+   "tokenName": "term",
+   "tokenStoragePath": "keys",
+   "customFieldsId": {
+   "lineageTable": 0,
+   "lineageRef": 0,
+   "alternativeName": 0,
+   "reference": 0,
+   "stewards": 0
+   }
+   }
+   `
+3) Запустить скрипт из командной строки `alation_term_loader`
+
 # Лог ошибок
 Формат лога ошибок
 - Имя файла
