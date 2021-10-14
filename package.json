@@ -22,7 +22,8 @@
     "build:esm": "babel src --config-file ./babel.esm.config.js --out-dir lib/esm --extensions \".ts,.tsx,.js,.jsx\" --source-maps",
     "watch:esm": "babel src --config-file ./babel.esm.config.js --out-dir lib/esm --extensions \".ts,.tsx,.js,.jsx\" --source-maps -w",
     "eslint:fix": "npx eslint --fix src --ext .js,.ts",
-    "build:types": "tsc -p tsconfig-declarations.json"
+    "build:types": "tsc -p tsconfig-declarations.json",
+    "publish": "npm run build && npm publish"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
