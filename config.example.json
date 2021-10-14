@@ -1,0 +1,15 @@
+{
+  "host": "host",
+  "username": "user@alation.com",
+  "password": "password",
+  "logPath": "logs",
+  "tokenName": "term",
+  "tokenStoragePath": "term/keys",
+  "customFieldsId": {
+    "lineageTable": 0,
+    "lineageRef": 0,
+    "alternativeName": 0,
+    "reference": 0,
+    "stewards": 0
+  }
+}

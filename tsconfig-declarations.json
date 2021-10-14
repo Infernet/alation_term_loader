@@ -7,34 +7,34 @@
       "esnext"
     ],
     "allowJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "incremental": true,
-    "checkJs": false,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "declarationDir": "./lib/ts",
-    "outDir": "./lib/ts",
+    "declarationDir": "./lib/types",
+    "outDir": "./lib/types",
     "importHelpers": true,
     "isolatedModules": true,
+    "emitDeclarationOnly": true,
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
       "src": [
         "src/"
-      ]
+      ],
     }
   },
   "include": [
-    "src"
+    "src",
   ],
   "exclude": [
     "node_modules",

@@ -1,0 +1,1 @@
+{"version":3,"file":"physics.d.ts","sourceRoot":"","sources":["../../../src/services/physics.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,OAAO,EAAC,MAAM,mBAAmB,CAAC;AAC1C,OAAO,EAAC,OAAO,EAAoB,MAAM,UAAU,CAAC;AASpD,wBAAsB,gBAAgB,CAAC,SAAS,EAAE,OAAO,EAAE,MAAM,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,EAAE,UAAU,EAAE,OAAO,GAAG,OAAO,CAAC,IAAI,CAAC,CA8ChI"}
