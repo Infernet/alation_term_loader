@@ -33,29 +33,23 @@ export class UncorrectedReferenceTermError extends BaseTermError {
 
 export class ParentTermNotFoundTermError extends BaseTermError {
   constructor(termName = '', termParentName = '') {
-    super(termName,
-        termParentName,
-        'Родительский термин',
-        'ERR-006 Родительский термин не существует');
+    super('Родительский термин', 'ERR-006 Родительский термин не существует', termName, termParentName);
   }
 }
 
 export class ParentTermDuplicateTermError extends BaseTermError {
   constructor(termName = '', termParentName = '') {
-    super(termName,
-        termParentName,
-        'Родительский термин',
+    super('Родительский термин',
         'ERR-007 В Alation существует два родительских термина с данным' +
-        ' названием - исправьте перед загрузкой данного файла');
+        ' названием - исправьте перед загрузкой данного файла',
+        termName,
+        termParentName);
   }
 }
 
 export class TermNotFoundTermError extends BaseTermError {
   constructor(termName = '', termParentName = '') {
-    super(termName,
-        termParentName,
-        'Термин',
-        'ERR-008 Термин не существует');
+    super('Термин', 'ERR-008 Термин не существует', termName, termParentName);
   }
 }
 

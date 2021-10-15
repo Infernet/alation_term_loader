@@ -1,6 +1,6 @@
 {
   "name": "alation_term_loader",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "private": false,
   "description": "Загрузчик терминов и физики в Alation",
   "homepage": "https://github.com/Infernet/alation_term_loader",

@@ -21,7 +21,7 @@ export function validateTerm(term: ITerm): void {
   if (!term.description.length) {
     throw new MissingRequireFieldTermError(TERM_COLUMN_NAMES.description);
   }
-  if (term.reference.split('.').length !== 3) {
+  if (term.reference?.length && term.reference.split('.').length !== 3) {
     throw new UncorrectedReferenceTermError(term.termName, term.parentTermName);
   }
 }

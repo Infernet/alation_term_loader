@@ -8,11 +8,11 @@ export function parseTerm(content: string): ITerm {
 
   for (const [fieldName, position] of Object.entries(TERM_FIELDS_POSITION)) {
     if (fieldName === 'stewards') {
-      result[fieldName] = columns[position].split(',');
+      result[fieldName] = columns[position]?.length ? columns[position].split(',') : [];
       continue;
     }
     // @ts-ignore
-    result[fieldName] = columns[position];
+    result[fieldName] = columns[position]?.trim() ?? '';
   }
 
   return result;
@@ -24,7 +24,7 @@ export function parsePhysics(content: string): IPhysic {
 
   for (const [fieldName, position] of Object.entries(PHYSICS_FIELDS_POSITION)) {
     // @ts-ignore
-    result[fieldName] = columns[position];
+    result[fieldName] = columns[position]?.trim() ?? '';
   }
 
   return result;
