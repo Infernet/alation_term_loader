@@ -18,7 +18,7 @@ import {
   ParentTermNotFoundPhysicError,
   TermNotFoundPhysicError,
 } from '../errors/physics';
-import {generateLineageTableRow, insertOrReplaceTableRow} from './html';
+import {generateLineageTableRow, generateTextElement, insertOrReplaceTableRow} from './html';
 import htmlParser from 'node-html-parser';
 
 export async function insertTerm(connector: Alation, customFieldsId: CustomFieldsIdCollection, termData: ITerm): Promise<void> {
@@ -68,7 +68,11 @@ export async function updateTerm(connector: Alation, customFieldsId: CustomField
   // обновление полей
 
   // body
-  term = await connector.Article.update<ITermArticle>({id: term.id, title: term.title, body: termData.description});
+  term = await connector.Article.update<ITermArticle>({
+    id: term.id,
+    title: term.title,
+    body: generateTextElement(termData.description).toString(),
+  });
   // Alternative name
   if (!(await setAlternativeNameField(connector, customFieldsId.alternativeName, term, termData.alternativeName))) {
     throw new AlationTermError(TERM_COLUMN_NAMES.alternativeName, 'не удалось обновить поле Alternative name');
@@ -153,7 +157,7 @@ export async function uploadPhysic(connector: Alation, customFieldsId: CustomFie
           attribute.name.toLowerCase(),
         ].join('.'),
         ...(physicData.title.length ? {title: physicData.title} : {}),
-        ...(physicData.description.length ? {description: physicData.description} : {}),
+        ...(physicData.description.length ? {description: generateTextElement(physicData.description).toString()} : {}),
       });
 
       if (response.error) {
@@ -193,7 +197,7 @@ export async function uploadPhysic(connector: Alation, customFieldsId: CustomFie
           table.name.toLowerCase(),
         ].join('.'),
         ...(physicData.title.length ? {title: physicData.title} : {}),
-        ...(physicData.description.length ? {description: physicData.description} : {}),
+        ...(physicData.description.length ? {description: generateTextElement(physicData.description).toString()} : {}),
       });
 
       if (response.error) {

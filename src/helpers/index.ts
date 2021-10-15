@@ -68,7 +68,7 @@ export async function setReferenceField(connector: Alation,
     otype: 'article',
     field_id: customFieldId,
     oid: term.id,
-    value: reference ? generateEntityLink('table', await getTableByPath(connector, reference)).toString() : '',
+    value: reference ? generateEntityLink('table', await getTableByPath(connector, reference)).toString() : generateTextElement('').toString(),
   });
 
   return !!response;
