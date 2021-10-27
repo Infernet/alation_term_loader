@@ -1,6 +1,7 @@
 import { HTMLElement } from 'node-html-parser';
 import { IAlationEntity, IAttribute, IDatasource, ISchema, ITable, ObjectType } from 'alation_connector';
 import { Assign } from 'utility-types';
+export declare function isHtmlText(content: string): boolean;
 export declare function generateEntityLink(otype: ObjectType, entity: Assign<IAlationEntity, {
     url: string;
 }>): HTMLElement;

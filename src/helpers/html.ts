@@ -1,7 +1,12 @@
-import {HTMLElement} from 'node-html-parser';
+import {HTMLElement, parse, TextNode} from 'node-html-parser';
 import {IAlationEntity, IAttribute, IDatasource, ISchema, ITable, ObjectType} from 'alation_connector';
 import {Assign} from 'utility-types';
 
+export function isHtmlText(content: string): boolean {
+  const parseContent = parse(content);
+
+  return Boolean(parseContent.childNodes.length && !(parseContent.childNodes[0] instanceof TextNode));
+}
 
 export function generateEntityLink(otype: ObjectType, entity: Assign<IAlationEntity, { url: string }>): HTMLElement {
   return new HTMLElement('a',
@@ -10,8 +15,11 @@ export function generateEntityLink(otype: ObjectType, entity: Assign<IAlationEnt
 }
 
 export function generateTextElement(content: string): HTMLElement {
+  if (isHtmlText(content)) {
+    return parse(content);
+  }
   const tag = new HTMLElement('p', {class: 'term_loader_text'}, '', null);
-  tag.set_content(content);
+  if (content.length) tag.set_content(content);
   return tag;
 }
 
@@ -49,12 +57,12 @@ export function generateLineageTableRow(entityType: 'attribute' | 'table',
   row.appendChild(linkTag);
 
   datasourceTag.appendChild(generateTextElement(ds.title));
-  schemaTag.appendChild(generateTextElement(schema.name));
-  tableTag.appendChild(generateTextElement(table.name));
+  schemaTag.appendChild(generateTextElement(schema.name.toUpperCase()));
+  tableTag.appendChild(generateTextElement(table.name.toUpperCase()));
 
 
   if (entityType === 'attribute' && attribute) {
-    attributeTag.appendChild(generateTextElement(attribute.name));
+    attributeTag.appendChild(generateTextElement(attribute.name.toUpperCase()));
     descriptionTag.appendChild(generateTextElement(attribute.description));
     linkTag.appendChild(generateLink(attribute.url, linkTag));
   } else {
@@ -103,7 +111,7 @@ export function generateLineageTable(): HTMLElement {
   datasourceTag.set_content('Система');
   schemaTag.set_content('Схема');
   tableTag.set_content('Таблица');
-  attributeTag.set_content('Аттрибут');
+  attributeTag.set_content('Атрибут');
   linkTag.set_content('Ссылка');
 
   const body = new HTMLElement('tbody', {class: 'term_loader_table', id: 'term_loader_lineage_table_body'}, '', root);
